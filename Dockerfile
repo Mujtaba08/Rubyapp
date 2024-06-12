@@ -1,15 +1,7 @@
-FROM python:3.9-slim
-
-WORKDIR /usr/src/app
-
-COPY requirements.txt ./
-
-RUN pip install --no-cache-dir -r requirements.txt
-
-COPY . .
-
-EXPOSE 5000
-
-ENV NAME World
-
-CMD ["python", "app.py"]
+FROM ruby:2.5
+WORKDIR /usr/src/app/
+COPY Gemfile /usr/src/app/
+RUN bundle install
+ADD http_server.rb /usr/src/app/
+EXPOSE 80
+CMD ["ruby", "/usr/src/app/http_server.rb"]
